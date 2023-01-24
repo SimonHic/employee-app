@@ -22,7 +22,7 @@ fun userDetails() {
     val monthlySalary = grossSalary/12
     val monthlyPaye = monthlySalary*(payePercentage/100)
     val monthlyPrsi = monthlySalary*(prsiPercentage/100)
-    val grossPaye = monthlySalary*(annualBonus/12)
+    val grossPaye = monthlySalary+(annualBonus/12)
     val totalDeduction = monthlyPrsi + cycleToWork
 
     val df = DecimalFormat("#.##")
@@ -39,13 +39,13 @@ fun userDetails() {
 
     println("|   PAYMENT DETAILS   "+ "           " + "DEDUCTION DETAILS      |")
     println("|-------------------------------------------------------|")
-    println("|   Salary: " + df.format(monthlySalary) + "                   " + "PAYE: " + df.format(monthlyPaye) + "     |")
+    println("|   Salary: " + df.format(monthlySalary) + "                   " + "PAYE: " + df.format(monthlyPaye) + "      |")
     println("|   Bonus: " + df.format(annualBonus/12) + "                     " + "PRSI: " + df.format(monthlyPrsi)+"      |")
     println("|\t\t\t\t\t\t\t   Cycle To Work: $cycleToWork     |")
     println("|-------------------------------------------------------|")
-    println("|   Gross: " + df.format(monthlySalary + (annualBonus/12)) + "       " + "Total Deductions: " + df.format(totalDeduction)+"      |")
+    println("|   Gross: " + df.format(grossPaye) + "       " + "Total Deductions: " + df.format(totalDeduction)+"       |")
     println("|-------------------------------------------------------|")
-    println("|                  NET PAY: " + df.format(monthlySalary-totalDeduction) +"                        |")
+    println("|                  NET PAY: " + df.format(monthlySalary-totalDeduction) +"                     |")
     println("|                                                       |")
     println("|-------------------------------------------------------|")
 }
