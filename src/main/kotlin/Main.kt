@@ -4,10 +4,10 @@ import java.text.DecimalFormat
 fun main(args: Array<String>) {
     println("Pay Slip Printer")
 
+    //Calls the userDetails Method that is created and runs it in the main
     userDetails()
 }
 
-////////////////The total deductions is wrong her error is that she added an extra paye/prsi onto the thing (check solutions)
 fun userDetails() {
     val firstName = "Joe"
     val lastName = "Soap"
@@ -25,6 +25,7 @@ fun userDetails() {
     val grossPaye = monthlySalary+(annualBonus/12)
     val totalDeduction = monthlyPrsi + cycleToWork
 
+    //Rounds by 2 decimal places
     val df = DecimalFormat("#.##")
     df.roundingMode = RoundingMode.HALF_UP
 
