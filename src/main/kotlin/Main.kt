@@ -1,23 +1,32 @@
+//Exercise 6 continuation
+import java.lang.Math.round
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
-fun main(args: Array<String>) {
-    println("Pay Slip Printer")
 
-    //Calls the userDetails Method that is created and runs it in the main
-    userDetails()
+const val firstName = "Joe"
+const val lastName = "Soap"
+const val gender = "M"
+const val employeeId = 6143
+const val grossSalary = 67543.21
+const val payePercentage = 38.5
+const val prsiPercentage = 5.2
+const val annualBonus = 1450.50
+const val cycleToWork = 54.33
+fun main(args: Array<String>) {
+    ////println("Pay Slip Printer")
+
+    println(getFullName())
+    //Calls the printPaySlip Method that is created and runs it and its contents in the Main
+    printPayslip()
+}
+fun getFullName() = when (gender){
+    "m", "M" -> "Mr. $firstName $lastName"
+    "f", "F" -> "Ms. $firstName $lastName"
+    else -> "$firstName $lastName"
 }
 
-fun userDetails() {
-    val firstName = "Joe"
-    val lastName = "Soap"
-    val gender = "M"
-    val employeeId = 6143
-    val grossSalary = 67543.21
-    val payePercentage = 38.5
-    val prsiPercentage = 5.2
-    val annualBonus = 1450.50
-    val cycleToWork = 54.33
+fun printPayslip() {
 
     val monthlySalary = grossSalary/12
     val monthlyPaye = monthlySalary*(payePercentage/100)
@@ -25,30 +34,31 @@ fun userDetails() {
     val grossPaye = monthlySalary+(annualBonus/12)
     val totalDeduction = monthlyPrsi + cycleToWork
 
-    //Rounds by 2 decimal places
-    val df = DecimalFormat("#.##")
-    df.roundingMode = RoundingMode.HALF_UP
+    println(
+        """
+                                      Monthly Payslip 
+        _____________________________________________________________________________
+                   ${getFullName().uppercase()}        ID: $employeeId                  
+        _____________________________________________________________________________    
+                   PAYMENT DETAILS (gross pay: ${roundToTwoDecimals(grossPaye)}                                                                    
+        _____________________________________________________________________________
+                   Salary: ${roundToTwoDecimals(monthlySalary)}
+                   Bonus:  ${roundToTwoDecimals(annualBonus / 12)}            
+        _____________________________________________________________________________
+                   DEDUCTION DETAILS (total Deductions: ${roundToTwoDecimals(totalDeduction)}      
+        _____________________________________________________________________________
+                   PAYE: ${roundToTwoDecimals(monthlyPaye)}                
+                   PRSI: ${roundToTwoDecimals(monthlyPrsi)}  
+                   Cycle To Work: ${roundToTwoDecimals(cycleToWork)}         
+        ______________________________________________________________________________
+                   NET PAY: ${roundToTwoDecimals(grossPaye - totalDeduction)} 
+        ______________________________________________________________________________"""
+    )
 
-    println("---------------------------------------------------------")
-    println("|                  Monthly Payslip                      |")
-    println("|-------------------------------------------------------|")
-    println("|\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
-    println("|  Employee Name: ${firstName.uppercase()} ${lastName.uppercase()}($gender)       Employee ID: $employeeId   |")
-    println("|\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
-    println("|-------------------------------------------------------|")
-    println("|\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
-
-    println("|   PAYMENT DETAILS   "+ "           " + "DEDUCTION DETAILS      |")
-    println("|\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
-    println("|-------------------------------------------------------|")
-    println("|   Salary: " + df.format(monthlySalary) + "\t\t\t\t\t " + "PAYE: " + df.format(monthlyPaye) + "      |")
-    println("|   Bonus: " + df.format(annualBonus/12) + " \t\t\t\t\t  " + "PRSI: " + df.format(monthlyPrsi)+"      |")
-    println("|\t\t\t\t\t\t\t   Cycle To Work: $cycleToWork     |")
-    println("|-------------------------------------------------------|")
-    println("|   Gross: " + df.format(grossPaye) + "       " + "Total Deductions: " + df.format(totalDeduction)+"       |")
-    println("|-------------------------------------------------------|")
-    println("|\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
-    println("|\t\t\t\t   NET PAY: " + df.format(monthlySalary-totalDeduction) +"\t\t\t\t\t\t|")
-    println("|\t\t\t\t\t\t\t\t\t\t\t\t\t\t|")
-    println("|-------------------------------------------------------|")
 }
+//Function allows for rounding by two decimal places
+fun roundToTwoDecimals(number: Double) = "%.2f".format(number).toDouble()
+
+
+
+
