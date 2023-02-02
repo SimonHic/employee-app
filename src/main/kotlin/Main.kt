@@ -1,4 +1,4 @@
-//Exercise 6 continuation
+//Exercise 8 continuation
 import java.lang.Math.round
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -13,10 +13,15 @@ const val payePercentage = 38.5
 const val prsiPercentage = 5.2
 const val annualBonus = 1450.50
 const val cycleToWork = 54.33
-fun main(args: Array<String>) {
-    ////println("Pay Slip Printer")
+const val monthlySalary = grossSalary/12
+const val monthlyPrsi = monthlySalary*(prsiPercentage/100)
 
+
+fun main(args: Array<String>) {
+
+    //Call the getFullName function and outputs it to the main in the form of a println
     println(getFullName())
+
     //Calls the printPaySlip Method that is created and runs it and its contents in the Main
     printPayslip()
 }
@@ -26,33 +31,41 @@ fun getFullName() = when (gender){
     else -> "$firstName $lastName"
 }
 
-fun printPayslip() {
+fun getMonthlySalary() = grossSalary/12
+fun getMonthlyPaye() = monthlySalary*(payePercentage/100)
+fun getMonthlyPrsi() = monthlySalary*(prsiPercentage/100)
+fun getGrossPaye() = monthlySalary+(annualBonus/12)
+fun getTotalDeductions() = monthlyPrsi + cycleToWork
 
-    val monthlySalary = grossSalary/12
-    val monthlyPaye = monthlySalary*(payePercentage/100)
-    val monthlyPrsi = monthlySalary*(prsiPercentage/100)
-    val grossPaye = monthlySalary+(annualBonus/12)
-    val totalDeduction = monthlyPrsi + cycleToWork
+
+fun printPayslip() {
 
     println(
         """
                                       Monthly Payslip 
-        _____________________________________________________________________________
-                   ${getFullName().uppercase()}        ID: $employeeId                  
-        _____________________________________________________________________________    
-                   PAYMENT DETAILS (gross pay: ${roundToTwoDecimals(grossPaye)}                                                                    
-        _____________________________________________________________________________
-                   Salary: ${roundToTwoDecimals(monthlySalary)}
-                   Bonus:  ${roundToTwoDecimals(annualBonus / 12)}            
-        _____________________________________________________________________________
-                   DEDUCTION DETAILS (total Deductions: ${roundToTwoDecimals(totalDeduction)}      
-        _____________________________________________________________________________
-                   PAYE: ${roundToTwoDecimals(monthlyPaye)}                
-                   PRSI: ${roundToTwoDecimals(monthlyPrsi)}  
-                   Cycle To Work: ${roundToTwoDecimals(cycleToWork)}         
-        ______________________________________________________________________________
-                   NET PAY: ${roundToTwoDecimals(grossPaye - totalDeduction)} 
-        ______________________________________________________________________________"""
+        |_____________________________________________________________________________
+        |           ${getFullName().uppercase()}        ID Number: $employeeId                  
+        |_____________________________________________________________________________    
+        |           PAYMENT DETAILS: 
+        |           
+        |           Gross Pay: ${roundToTwoDecimals(getGrossPaye())}                                                                    
+        |_____________________________________________________________________________
+        |           Salary: ${roundToTwoDecimals(getMonthlySalary())}
+        |           
+        |           Bonus:  ${roundToTwoDecimals(annualBonus / 12)}            
+        |_____________________________________________________________________________
+        |           DEDUCTION DETAILS: 
+        |           
+        |           Total Deductions: ${roundToTwoDecimals(getTotalDeductions())}      
+        |_____________________________________________________________________________
+        |           PAYE: ${roundToTwoDecimals(getMonthlyPaye())}
+        |                           
+        |           PRSI: ${roundToTwoDecimals(getMonthlyPrsi())}  
+        |           
+        |           Cycle To Work: ${roundToTwoDecimals(cycleToWork)}         
+        |______________________________________________________________________________
+        |           NET PAY: ${roundToTwoDecimals(getGrossPaye() - getTotalDeductions())} 
+        |______________________________________________________________________________"""
     )
 
 }
