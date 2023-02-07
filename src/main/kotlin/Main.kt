@@ -22,8 +22,8 @@ fun main(args: Array<String>) {
     //Call the getFullName function and outputs it to the main in the form of a println
     println(getFullName())
 
-    //Calls the printPaySlip Method that is created and runs it and its contents in the Main
-    printPayslip()
+    //Calls the getPaySlip Method that is created and runs it and its contents in the Main
+    print(getPayslip())
 }
 fun getFullName() = when (gender){
     "m", "M" -> "Mr. $firstName $lastName"
@@ -38,7 +38,7 @@ fun getGrossPaye() = monthlySalary+(annualBonus/12)
 fun getTotalDeductions() = monthlyPrsi + cycleToWork
 
 
-fun printPayslip() {
+fun getPayslip() {
 
     println(
         """
