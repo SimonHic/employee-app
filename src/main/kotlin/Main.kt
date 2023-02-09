@@ -22,9 +22,54 @@ fun main(args: Array<String>) {
     //Call the getFullName function and outputs it to the main in the form of a println
     println(getFullName())
 
-    //Calls the getPaySlip Method that is created and runs it and its contents in the Main
-    print(getPayslip())
+
+    var input: Int
+
+    do {
+        input = menu()
+        when (input) {
+            1 -> println("Monthly Salary: ${roundToTwoDecimals(getMonthlySalary())}")
+            2 -> println("Monthly PRSI: ${roundToTwoDecimals(getMonthlyPrsi())}")
+            3 -> println("Monthly PAYE: ${roundToTwoDecimals(getMonthlyPaye())}")
+            4 -> println("Monthly Gross Pay: ${roundToTwoDecimals(getGrossPaye())}")
+            5 -> println("Monthly Total Deductions: ${roundToTwoDecimals(getTotalDeductions())}")
+            6 -> println("Monthly Net Pay: ${roundToTwoDecimals(getNetPay())}")
+            7 -> println(getPayslip())
+            0 -> println("Exiting Application")
+            else -> println("Invalid option, please select a value between 0 and 7 :)")
+        }
+        println()
+    } while (input != 0)
 }
+
+
+
+
+
+    //println("Monthly Net Pay: ${getNetMonthlyPay()}")
+
+    //Calls the getPaySlip Method that is created and runs it and its contents in the Main
+
+
+
+
+fun menu() : Int {
+    print("""
+        Employee Menu for ${getFullName()}
+        1.)  Monthly Salary
+        2.)  Monthly PRSI
+        3.)  Monthly PAYE
+        4.)  Monthly Gross PAYE
+        5.)  Monthly Total Deductions
+        6.)  Monthly Net Pay
+        7.)  Full Payslip
+        
+        0.)  Exit
+        
+      Enter  Option : """)
+      return readLine()!!.toInt()
+}
+
 fun getFullName() = when (gender){
     "m", "M" -> "Mr. $firstName $lastName"
     "f", "F" -> "Ms. $firstName $lastName"
@@ -36,6 +81,9 @@ fun getMonthlyPaye() = monthlySalary*(payePercentage/100)
 fun getMonthlyPrsi() = monthlySalary*(prsiPercentage/100)
 fun getGrossPaye() = monthlySalary+(annualBonus/12)
 fun getTotalDeductions() = monthlyPrsi + cycleToWork
+
+fun getNetPay() = getGrossPaye() - getTotalDeductions()
+
 
 
 fun getPayslip() {
@@ -64,7 +112,7 @@ fun getPayslip() {
         |           
         |           Cycle To Work: ${roundToTwoDecimals(cycleToWork)}         
         |______________________________________________________________________________
-        |           NET PAY: ${roundToTwoDecimals(getGrossPaye() - getTotalDeductions())} 
+        |           NET PAY: ${roundToTwoDecimals(getNetPay())} 
         |______________________________________________________________________________"""
     )
 
