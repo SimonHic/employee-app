@@ -1,27 +1,22 @@
-//Exercise 8 continuation
-import java.lang.Math.round
-import java.math.RoundingMode
-import java.text.DecimalFormat
+//At the end of exercise 2 with getFullName() recently updated
+package ie.setu
 
 
-const val firstName = "Joe"
-const val lastName = "Soap"
-const val gender = "M"
-const val employeeId = 6143
-const val grossSalary = 67543.21
-const val payePercentage = 38.5
-const val prsiPercentage = 5.2
-const val annualBonus = 1450.50
-const val cycleToWork = 54.33
-const val monthlySalary = grossSalary/12
-const val monthlyPrsi = monthlySalary*(prsiPercentage/100)
+var employee =  Employee("Joe", "Soap", 'm', 6143, 67543.21, 38.5, 5.2, 1450.50, 54.33)
+
+
+
 
 
 fun main(args: Array<String>) {
 
-    //Call the getFullName function and outputs it to the main in the form of a println
+    /*
+    Call the getFullName function and outputs it to the main in the form of a print
     println(getFullName())
+    */
 
+    //Calls the add() function which allows the user to add a new employee
+    add()
 
     var input: Int
 
@@ -42,17 +37,6 @@ fun main(args: Array<String>) {
     } while (input != 0)
 }
 
-
-
-
-
-    //println("Monthly Net Pay: ${getNetMonthlyPay()}")
-
-    //Calls the getPaySlip Method that is created and runs it and its contents in the Main
-
-
-
-
 fun menu() : Int {
     print("""
         Employee Menu for ${getFullName()}
@@ -70,17 +54,42 @@ fun menu() : Int {
       return readLine()!!.toInt()
 }
 
-fun getFullName() = when (gender){
-    "m", "M" -> "Mr. $firstName $lastName"
-    "f", "F" -> "Ms. $firstName $lastName"
-    else -> "$firstName $lastName"
+fun add(){
+    print("Enter first name: ")
+    val firstName = readLine().toString()
+    print("Enter surname: ")
+    val surname = readLine().toString()
+    print("Enter gender (m/f): ")
+    val gender = readLine()!!.toCharArray()[0]
+    print("Enter employee ID: ")
+    val employeeID = readLine()!!.toInt()
+    print("Enter gross salary: ")
+    val grossSalary = readLine()!!.toDouble()
+    print("Enter PAYE %: ")
+    val payePercentage = readLine()!!.toDouble()
+    print("Enter PRSI %: ")
+    val prsiPercentage = readLine()!!.toDouble()
+    print("Enter Annual Bonus: ")
+    val annualBonus= readLine()!!.toDouble()
+    print("Enter Cycle to Work Deduction: ")
+    val cycleToWorkMonthlyDeduction= readLine()!!.toDouble()
+
+    employee = Employee(firstName, surname, gender, employeeID, grossSalary, payePercentage, prsiPercentage, annualBonus, cycleToWorkMonthlyDeduction)
 }
 
-fun getMonthlySalary() = grossSalary/12
-fun getMonthlyPaye() = monthlySalary*(payePercentage/100)
-fun getMonthlyPrsi() = monthlySalary*(prsiPercentage/100)
-fun getGrossPaye() = monthlySalary+(annualBonus/12)
-fun getTotalDeductions() = monthlyPrsi + cycleToWork
+
+fun getFullName() = when (employee.gender){
+    'm', 'M' -> "Mr. ${employee.firstName} ${employee.lastName}"
+    'f', 'F' -> "Ms.  ${employee.firstName} ${employee.lastName}"
+    else ->  "${employee.firstName} ${employee.lastName}"
+}
+
+
+fun getMonthlySalary() = employee.grossSalary/12
+fun getMonthlyPaye() = employee.monthlySalary*(employee.payePercentage/100)
+fun getMonthlyPrsi() = employee.monthlySalary*(employee.prsiPercentage/100)
+fun getGrossPaye() = employee.monthlySalary+(employee.annualBonus/12)
+fun getTotalDeductions() = employee.monthlyPrsi + employee.cycleToWork
 
 fun getNetPay() = getGrossPaye() - getTotalDeductions()
 
@@ -92,7 +101,7 @@ fun getPayslip() {
         """
                                       Monthly Payslip 
         |_____________________________________________________________________________
-        |           ${getFullName().uppercase()}        ID Number: $employeeId                  
+        |           ${getFullName().uppercase()}        ID Number: ${employee.employeeId}                  
         |_____________________________________________________________________________    
         |           PAYMENT DETAILS: 
         |           
@@ -100,7 +109,7 @@ fun getPayslip() {
         |_____________________________________________________________________________
         |           Salary: ${roundToTwoDecimals(getMonthlySalary())}
         |           
-        |           Bonus:  ${roundToTwoDecimals(annualBonus / 12)}            
+        |           Bonus:  ${roundToTwoDecimals(employee.annualBonus / 12)}            
         |_____________________________________________________________________________
         |           DEDUCTION DETAILS: 
         |           
@@ -110,7 +119,7 @@ fun getPayslip() {
         |                           
         |           PRSI: ${roundToTwoDecimals(getMonthlyPrsi())}  
         |           
-        |           Cycle To Work: ${roundToTwoDecimals(cycleToWork)}         
+        |           Cycle To Work: ${roundToTwoDecimals(employee.cycleToWork)}         
         |______________________________________________________________________________
         |           NET PAY: ${roundToTwoDecimals(getNetPay())} 
         |______________________________________________________________________________"""
