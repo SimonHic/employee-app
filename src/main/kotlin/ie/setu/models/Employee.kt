@@ -1,4 +1,6 @@
-package ie.setu
+package ie.setu.models
+
+import ie.setu.roundToTwoDecimals
 
 //import ie.setu.Main.roundToTwoDecimals
 

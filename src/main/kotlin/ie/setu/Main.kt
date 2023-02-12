@@ -1,6 +1,7 @@
 package ie.setu
 
-import ie.setu.EmployeeAPI
+import ie.setu.controllers.EmployeeAPI
+import ie.setu.models.Employee
 import mu.KotlinLogging
 
 var employees = EmployeeAPI()
@@ -95,7 +96,7 @@ fun add(){
 
 fun list() {
     employees.findAll()
-        .forEach{println(it)}
+        .forEach{ println("Employee: $it")}
 }
 
 //Function allows for rounding by two decimal places
