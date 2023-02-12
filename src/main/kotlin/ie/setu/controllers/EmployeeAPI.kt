@@ -13,10 +13,12 @@ class EmployeeAPI {
     fun findAll(): List<Employee> {
         return employees
     }
-    fun findOne(id: Int): Employee?{
-        return employees.find {p -> p.employeeId == id}
+
+    fun findOne(id: Int): Employee? {
+        return employees.find { p -> p.employeeId == id }
     }
-    fun create(employee: Employee){
+
+    fun create(employee: Employee) {
         employee.employeeId = getId()
         employees.add(employee)
 

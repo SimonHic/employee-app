@@ -2,34 +2,30 @@ package ie.setu.models
 
 import ie.setu.roundToTwoDecimals
 
-//import ie.setu.Main.roundToTwoDecimals
 
 class Employee(
     val firstName: String = "Joe",
-    val lastName: String = "Soap",
-    val gender: Char = 'M',
+    private val lastName: String = "Soap",
+    private val gender: Char = 'M',
     var employeeId: Int = 6143,
-    val grossSalary: Double = 67543.21,
-    val payePercentage: Double = 38.5,
-    val prsiPercentage: Double = 5.2,
-    val annualBonus: Double = 1450.50,
-    val cycleToWork: Double = 54.33,
-    //var monthlySalary: Double = grossSalary/12,
-    //val monthlyPrsi: Double = monthlySalary*(prsiPercentage/100)
-){
-    fun getFullName() = when (gender){
-        'm', 'M' -> "Mr. ${firstName} ${lastName}"
-        'f', 'F' -> "Ms.  ${firstName} ${lastName}"
-        else ->  "${firstName} ${lastName}"
+    private val grossSalary: Double = 67543.21,
+    private val payePercentage: Double = 38.5,
+    private val prsiPercentage: Double = 5.2,
+    private val annualBonus: Double = 1450.50,
+    private val cycleToWork: Double = 54.33,
+) {
+    private fun getFullName() = when (gender) {
+        'm', 'M' -> "Mr. $firstName $lastName"
+        'f', 'F' -> "Ms.  $firstName $lastName"
+        else -> "$firstName $lastName"
     }
 
-    fun getMonthlySalary() = grossSalary/12
-    fun getMonthlyPaye() = getMonthlySalary()*(payePercentage/100)
-    fun getMonthlyPrsi() = getMonthlySalary()*(prsiPercentage/100)
-    fun getGrossPaye() = getMonthlySalary()+(annualBonus/12)
-    fun getTotalDeductions() = getMonthlyPrsi() + cycleToWork
-    fun getNetPay() = getGrossPaye() - getTotalDeductions()
-
+    private fun getMonthlySalary() = grossSalary / 12
+    private fun getMonthlyPaye() = getMonthlySalary() * (payePercentage / 100)
+    private fun getMonthlyPrsi() = getMonthlySalary() * (prsiPercentage / 100)
+    private fun getGrossPaye() = getMonthlySalary() + (annualBonus / 12)
+    private fun getTotalDeductions() = getMonthlyPrsi() + cycleToWork
+    private fun getNetPay() = getGrossPaye() - getTotalDeductions()
 
 
     fun getPayslip() {

@@ -3,6 +3,7 @@ package ie.setu
 import ie.setu.controllers.EmployeeAPI
 import ie.setu.models.Employee
 import mu.KotlinLogging
+import org.fusesource.jansi.Ansi.*
 
 var employees = EmployeeAPI()
 val logger = KotlinLogging.logger {}
@@ -14,8 +15,9 @@ fun main(args: Array<String>) {
     start()
 }
 
-fun menu() : Int {
-    print("""
+fun menu(): Int {
+    print(
+        """
      |______________
      |Employee Menu
      |______________
@@ -27,7 +29,8 @@ fun menu() : Int {
      |      
      |      0.) Exit
      |
-     |Enter Option: """.trimMargin())
+     |Enter Option: """.trimMargin()
+    )
     return readLine()!!.toInt()
 }
 
@@ -43,7 +46,7 @@ fun start() {
             4 -> paySlip()
             5 -> remove()
             -99 -> dummyData()
-            0 -> logger.info {"Exiting the Application"}
+            0 -> logger.info { "Exiting the Application" }
         }
         println()
     } while (input != 0)
@@ -52,10 +55,11 @@ fun start() {
 fun search() {
     val employee = getEmployeeById()
     if (employee == null)
-        logger.info{"No employee found!"}
+        logger.info { "No employee found!" }
     else
         println(employee)
 }
+
 
 internal fun getEmployeeById(): Employee? {
     print("Enter the employee id to search by: ")
@@ -75,39 +79,51 @@ fun dummyData() {
     employees.create(Employee("Tom", "Johnston", 'm', 0, 85000.42, 31.0, 7.5, 5000.0, 50.5))
 }
 
-fun add(){
-    print("Enter first name: ")
+fun add() {
+    print((ansi().render("@|blue Enter first name: |@")))
     val firstName = readLine().toString()
-    print("Enter surname: ")
+    print((ansi().render("@|blue Enter surname: |@")))
     val surname = readLine().toString()
-    print("Enter gender (m/f): ")
+    print((ansi().render("@|blue Enter gender (m/f): |@")))
     val gender = readLine()!!.toCharArray()[0]
-    print("Enter gross salary: ")
+    print((ansi().render("@|blue Enter gross salary: |@")))
     val grossSalary = readLine()!!.toDouble()
-    print("Enter PAYE %: ")
+    print((ansi().render("@|blue Enter PAYE %: |@")))
     val payePercentage = readLine()!!.toDouble()
-    print("Enter PRSI %: ")
+    print((ansi().render("@|blue Enter PRSI %: |@")))
     val prsiPercentage = readLine()!!.toDouble()
-    print("Enter Annual Bonus: ")
-    val annualBonus= readLine()!!.toDouble()
-    print("Enter Cycle to Work Deduction: ")
-    val cycleToWorkMonthlyDeduction= readLine()!!.toDouble()
+    print((ansi().render("@|blue Enter Annual Bonus: |@")))
+    val annualBonus = readLine()!!.toDouble()
+    print((ansi().render("@|blue Enter Cycle to Work Deduction: |@")))
+    val cycleToWorkMonthlyDeduction = readLine()!!.toDouble()
 
-    employees.create(Employee(firstName, surname, gender, 0, grossSalary, payePercentage, prsiPercentage, annualBonus, cycleToWorkMonthlyDeduction))
+    employees.create(
+        Employee(
+            firstName,
+            surname,
+            gender,
+            0,
+            grossSalary,
+            payePercentage,
+            prsiPercentage,
+            annualBonus,
+            cycleToWorkMonthlyDeduction
+        )
+    )
 }
 
 fun list() {
     employees.findAll()
-        .forEach{ println("Employee: $it")}
+        .forEach { println("Employee: $it") }
 }
 
 fun remove() {
     val employee = getEmployeeById()
     if (employee != null) {
         employees.remove(employee)
-        logger.info{"The Employee ${employee.firstName} has been successfully removed"}
+        logger.info { "The Employee ${employee.firstName} has been successfully removed" }
     } else {
-        logger.info {"No Employee found"}
+        logger.info { "No Employee found" }
     }
 }
 
