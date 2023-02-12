@@ -23,6 +23,7 @@ fun menu() : Int {
      |      2.) List All Employees
      |      3.) Search Employees
      |      4.) Print Payslip for Employee
+     |      5.) Remove an Employee
      |      
      |      0.) Exit
      |
@@ -40,6 +41,7 @@ fun start() {
             2 -> list()
             3 -> search()
             4 -> paySlip()
+            5 -> remove()
             -99 -> dummyData()
             0 -> logger.info {"Exiting the Application"}
         }
@@ -97,6 +99,16 @@ fun add(){
 fun list() {
     employees.findAll()
         .forEach{ println("Employee: $it")}
+}
+
+fun remove() {
+    val employee = getEmployeeById()
+    if (employee != null) {
+        employees.remove(employee)
+        logger.info{"The Employee ${employee.firstName} has been successfully removed"}
+    } else {
+        logger.info {"No Employee found"}
+    }
 }
 
 //Function allows for rounding by two decimal places
