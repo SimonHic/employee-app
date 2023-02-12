@@ -1,21 +1,29 @@
 package ie.setu
 
 import ie.setu.EmployeeAPI
+import mu.KotlinLogging
 
 var employees = EmployeeAPI()
+val logger = KotlinLogging.logger {}
+
 
 fun main(args: Array<String>) {
+    logger.info { "Launching Employee App" }
+    logger.info { "Welcome to the Employee App, to get started select one of the options below: " }
     start()
 }
 
 fun menu() : Int {
     print("""
+     |______________
      |Employee Menu
+     |______________
      |      1.) Add An Employee
      |      2.) List All Employees
      |      3.) Search Employees
      |      4.) Print Payslip for Employee
-     |      -1.) Exit
+     |      
+     |      0.) Exit
      |
      |Enter Option: """.trimMargin())
     return readLine()!!.toInt()
@@ -32,16 +40,16 @@ fun start() {
             3 -> search()
             4 -> paySlip()
             -99 -> dummyData()
-            -1 -> println("Exiting the Application")
+            0 -> logger.info {"Exiting the Application"}
         }
         println()
-    } while (input != -1)
+    } while (input != 0)
 }
 
 fun search() {
     val employee = getEmployeeById()
     if (employee == null)
-        println("No employee found!")
+        logger.info{"No employee found!"}
     else
         println(employee)
 }
